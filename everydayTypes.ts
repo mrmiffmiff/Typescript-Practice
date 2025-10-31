@@ -28,3 +28,44 @@ let someStrings: Array<string> = ["happy", "sad", "aeiou", "y"];
 // Anyway what I've done above with all those is use Type Annotations to be explicit. In those cases, it can be inferred so isn't always necessary.
 // TS understands more than I may imagine so potentially I can use fewer annotations than I think.
 
+// Functions
+
+// Parameter Type Annotation
+function greet(name: string) {
+    console.log("Hello, " + name.toUpperCase() + "!!");
+}
+
+// If executed would be a runtime error; for our purposes is actually a compiler error
+// greet(42);
+greet("john");
+
+// Return Type Annotations
+function getMeaningOfLife(): number {
+    return 42;
+}
+// Not really necessary, can be inferred
+
+console.log(getMeaningOfLife());
+// Can use Promise type with <> to annotate function that returns promise:
+async function getAsyncMeaningOfLife(): Promise<number> {
+    return 42;
+}
+
+getAsyncMeaningOfLife().then((value) => { console.log(value) });
+
+// Anonymous Functions: When a function appears in a place where TypeScript can determine how it’s going to be called, the parameters of that function are automatically given types.
+const names = ["Alice", "Bob", "Eve"];
+
+// Contextual typing for function - parameter s inferred to have type string
+names.forEach(function (s) {
+    console.log(s.toUpperCase());
+});
+
+// Contextual typing also applies to arrow functions
+names.forEach((s) => {
+    console.log(s.toUpperCase());
+});
+
+// TS uses the types of the forEach to determine s
+// Called contextual typing because context informs type
+// Again, important to know this happens so I know when annotation isn't needed
