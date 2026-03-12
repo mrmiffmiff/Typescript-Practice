@@ -31,13 +31,13 @@ let someStrings: Array<string> = ["happy", "sad", "aeiou", "y"];
 // Functions
 
 // Parameter Type Annotation
-function greet(name: string) {
+function greet2(name: string) {
     console.log("Hello, " + name.toUpperCase() + "!!");
 }
 
 // If executed would be a runtime error; for our purposes is actually a compiler error
 // greet(42);
-greet("john");
+greet2("john");
 
 // Return Type Annotations
 function getMeaningOfLife(): number {
@@ -69,3 +69,22 @@ names.forEach((s) => {
 // TS uses the types of the forEach to determine s
 // Called contextual typing because context informs type
 // Again, important to know this happens so I know when annotation isn't needed
+
+// This next parameter is an object... its type annotation is just an object listing the properties of the object and their types (optional)
+function printCoord(pt: { x: number; y: number }) {
+    console.log("The coordinate's x value is " + pt.x);
+    console.log("The coordinate's y value is " + pt.y);
+}
+
+printCoord({ x: 3, y: 7 });
+
+// Can have optional properties/parameters
+function printLastNameUpperCase(obj: { first: string; last?: string }) {
+    if (obj.last !== undefined) {
+        console.log(obj.first + " " + obj.last.toUpperCase());
+    }
+    else console.log(obj.first);
+}
+
+printLastNameUpperCase({ first: "Bob" });
+printLastNameUpperCase({ first: "Alice", last: "Alisson" });
