@@ -88,3 +88,47 @@ function printLastNameUpperCase(obj: { first: string; last?: string }) {
 
 printLastNameUpperCase({ first: "Bob" });
 printLastNameUpperCase({ first: "Alice", last: "Alisson" });
+
+// Basic Union Type, combining existing types
+function printId(id: number | string) {
+    console.log("Your ID is: " + id);
+    // console.log(id.toUpperCase()); <-- This doesn't work because it's not valid for every member of the union... however
+    if (typeof id === "string") console.log(id.toUpperCase()); // This works because we've narrowed
+    else console.log(id);
+}
+// OK
+printId(101);
+// OK
+printId("202");
+// Error
+// printId({ myId: 22342 });
+
+// The separator of union members is actually allowed before the first element, so:
+function printTextOrNumberOrBool(
+    textOrNumberOrBool:
+        | string
+        | number
+        | boolean
+) {
+    console.log(textOrNumberOrBool);
+}
+
+printTextOrNumberOrBool("hello");
+
+// Another example of narrowing
+function welcomePeople(x: string[] | string) {
+    if (Array.isArray(x)) console.log("Hello, " + x.join(" and ")); // 'x' is 'string[]'
+    else console.log("Welcome lone traveler " + x); // 'x' is 'string'
+}
+
+welcomePeople("Robert");
+welcomePeople(["Robert", "John", "Jacob", "Ned"]);
+
+// Both strings and arrays have a slice method, so we don't need to narrow
+// Return type is appropriately inferred as the same union
+function getFirstThree(x: number[] | string) {
+    return x.slice(0, 3);
+}
+
+console.log(getFirstThree([4, 8, 15, 16, 23, 42]));
+console.log(getFirstThree("The Tragedy of Darth Plagueis the Wise"));
