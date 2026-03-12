@@ -129,3 +129,45 @@ function printCoord3(pt) {
 printCoord({ x: 100, y: 100 });
 const bear = { name: "Baloo", honey: true, color: "black" };
 console.log(bear);
+// I have paper notes on Type Assertions, but "as" is the keyword here
+// Literal types: For one, the fact consts cannot be changed is reflected in typing. See hovers on the following:
+let exString = "greetings";
+const hello = "Hello World";
+// You can union literals and get some useful stuff out of this... and of course can combine with non-literal types
+function greetings(name, alignment) {
+    console.log(`Greetings, ${name}, you shall go to the ${alignment}.`);
+}
+greetings("Robert", "left");
+// greetings("John", "centre");
+function compare(a, b) {
+    return a === b ? 0 : a > b ? 1 : -1;
+}
+console.log(compare("happy", "hello"));
+function configure(x) {
+    // ...
+}
+configure({ width: 100 });
+configure("auto");
+// configure("automatic");
+// TS assumes values can change
+// This isn't an error:
+const obj = { counter: 0 };
+if (true) {
+    obj.counter = 1;
+}
+// However...
+function handleRequest(url, method) {
+    console.log(`I will ${method} ${url}`);
+}
+// This will
+// const req = { url: "https://example.com", method: "GET" };
+// handleRequest(req.url, req.method);
+// To get around this, can use type assertions
+const req1 = { url: "https://example.com", method: "GET" };
+handleRequest(req1.url, req1.method);
+// or
+const req2 = { url: "https://example.com", method: "GET" };
+handleRequest(req2.url, req2.method);
+// Or you can use as const which makes it the type system's equivalent of a js const, so it believes it won't change
+const req3 = { url: "https://example.com", method: "GET" };
+handleRequest(req3.url, req3.method);
