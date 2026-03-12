@@ -161,3 +161,59 @@ type ID = number | string;
 // let userInput = sanitizeInput(getInput());
 // userInput = "new input";
 
+// For object types can use (prefer) interfaces... they can be reopened and can also be extended
+/* Types extend like this:
+
+type Animal = {
+  name: string;
+}
+
+type Bear = Animal & { 
+  honey: boolean;
+}
+
+const bear = getBear();
+bear.name;
+bear.honey;
+
+Also you cannot do this
+
+type Window = {
+  title: string;
+}
+
+type Window = {
+  ts: TypeScriptAPI;
+}
+
+ // Error: Duplicate identifier 'Window'.
+*/
+// Compare to Interfaces
+
+interface Point2 {
+    x: number;
+    y: number;
+}
+
+function printCoord3(pt: Point2) {
+    console.log("The coordinate's x value is " + pt.x);
+    console.log("The coordinate's y value is " + pt.y);
+}
+
+printCoord({ x: 100, y: 100 });
+
+interface Animal {
+    name: string;
+}
+
+interface Bear extends Animal {
+    honey: boolean;
+}
+
+interface Bear {
+    color: string;
+}
+
+const bear: Bear = { name: "Baloo", honey: true, color: "black" };
+
+console.log(bear);

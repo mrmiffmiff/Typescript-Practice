@@ -122,10 +122,10 @@ function printCoord2(pt) {
     console.log("The coordinate's y value is " + pt.y);
 }
 printCoord2({ x: 100, y: 100 });
-// Again, are only aliases, they're like writing the aliased type. The following is legal in TS even though it looks odd.
-// type UserInputSanitizedString = string;
-// function sanitizeInput(str: string): UserInputSanitizedString {
-//     return sanitize(str);
-// }
-// let userInput = sanitizeInput(getInput());
-// userInput = "new input";
+function printCoord3(pt) {
+    console.log("The coordinate's x value is " + pt.x);
+    console.log("The coordinate's y value is " + pt.y);
+}
+printCoord({ x: 100, y: 100 });
+const bear = { name: "Baloo", honey: true, color: "black" };
+console.log(bear);
