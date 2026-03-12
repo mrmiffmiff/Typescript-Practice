@@ -117,3 +117,15 @@ function getFirstThree(x) {
 }
 console.log(getFirstThree([4, 8, 15, 16, 23, 42]));
 console.log(getFirstThree("The Tragedy of Darth Plagueis the Wise"));
+function printCoord2(pt) {
+    console.log("The coordinate's x value is " + pt.x);
+    console.log("The coordinate's y value is " + pt.y);
+}
+printCoord2({ x: 100, y: 100 });
+// Again, are only aliases, they're like writing the aliased type. The following is legal in TS even though it looks odd.
+// type UserInputSanitizedString = string;
+// function sanitizeInput(str: string): UserInputSanitizedString {
+//     return sanitize(str);
+// }
+// let userInput = sanitizeInput(getInput());
+// userInput = "new input";

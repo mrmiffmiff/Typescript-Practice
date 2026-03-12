@@ -132,3 +132,32 @@ function getFirstThree(x: number[] | string) {
 
 console.log(getFirstThree([4, 8, 15, 16, 23, 42]));
 console.log(getFirstThree("The Tragedy of Darth Plagueis the Wise"));
+
+// Type Aliases are not actually defining distinct types, but does define names for them. Any types are possible, allows later referral.
+// See object type, same as used earlier
+type Point = {
+    x: number;
+    y: number;
+};
+
+function printCoord2(pt: Point) {
+    console.log("The coordinate's x value is " + pt.x);
+    console.log("The coordinate's y value is " + pt.y);
+}
+
+printCoord2({ x: 100, y: 100 });
+
+// Type alias for earlier ID union type
+type ID = number | string;
+
+// Again, are only aliases, they're like writing the aliased type. The following is legal in TS even though it looks odd.
+
+// type UserInputSanitizedString = string;
+
+// function sanitizeInput(str: string): UserInputSanitizedString {
+//     return sanitize(str);
+// }
+
+// let userInput = sanitizeInput(getInput());
+// userInput = "new input";
+
