@@ -27,3 +27,25 @@ function myFunc(someArg: number) {
 }
 myFunc.description = "default description";
 doSomething(myFunc);
+
+// Construct Signatures are made by adding new in front of a call signature
+// type SomeConstructor = {
+//     new (s: string): SomeObject;
+// };
+// function fn(ctor: SomeConstructor) {
+//     return new ctor("hello");
+// }
+// Can combine call and construct signatures; some objects like Date can be called with or without new
+interface CallOrConstruct {
+    (n?: number): string;
+    new(s: string): Date;
+}
+function fn2(ctor: CallOrConstruct) {
+    // Passing an argument of type 'number' to 'ctor' matches it against
+    // the first definition in the 'CallOrConstruct' interface.
+    console.log(ctor(10));
+    // Similarly, passing an argument of type 'string' to 'ctor' matches it
+    // against the second definition in the 'CallOrConstruct' interface.
+    console.log(new ctor("10"));
+}
+fn2(Date);
