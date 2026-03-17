@@ -13,3 +13,17 @@ function printToConsole(s: string) {
     console.log(s);
 }
 greeter(printToConsole);
+
+// Call Signatures allow us to describe something callable with properties
+type DescribableFunction = {
+    description: string;
+    (someArg: number): boolean; // note colon between parameter and return rather than arrow
+};
+function doSomething(fn: DescribableFunction) {
+    console.log(fn.description + " returned " + fn(6));
+}
+function myFunc(someArg: number) {
+    return someArg > 3;
+}
+myFunc.description = "default description";
+doSomething(myFunc);
