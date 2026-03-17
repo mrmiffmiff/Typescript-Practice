@@ -89,3 +89,12 @@ console.log(longerString);
 // // and crashes here because arrays have
 // // a 'slice' method, but not the returned object!
 // console.log(arr.slice(0));
+// Type parameters can be specified in actual calls as type arguments, this can get around some issues with inference
+function combine(arr1, arr2) {
+    return arr1.concat(arr2);
+}
+// Cannot just call this on its own
+// const arr = combine([1, 2, 3], ["hello"]); this is an error
+// However, if we give a type argument and specify a union, it'll work
+const arr = combine([1, 2, 3], ["hello"]);
+console.log(arr);
