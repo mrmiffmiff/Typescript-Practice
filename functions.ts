@@ -122,3 +122,22 @@ function combine<Type>(arr1: Type[], arr2: Type[]): Type[] {
 // However, if we give a type argument and specify a union, it'll work
 const arr = combine<string | number>([1, 2, 3], ["hello"]);
 console.log(arr);
+
+// Optional parameters can be indicated with ?
+// Or can specify a default as usual, which I guess also makes it optional and types it
+// Avoid the former for callbacks though, unless you intend to call the function without passing that argument
+
+// Function overloads: Overload signatures, specifying a function that can be called in different ways
+function makeDate(timestamp: number): Date;
+function makeDate(m: number, d: number, y: number): Date;
+function makeDate(mOrTimestamp: number, d?: number, y?: number): Date { // this last signature is the implementation signature... it can't be called directly, only by the 2 overload signatures
+    if (d !== undefined && y !== undefined) {
+        return new Date(y, mOrTimestamp, d);
+    } else {
+        return new Date(mOrTimestamp);
+    }
+}
+const d1 = makeDate(12345678);
+const d2 = makeDate(5, 5, 5);
+// const d3 = makeDate(1, 3); obviouly is not possible
+
