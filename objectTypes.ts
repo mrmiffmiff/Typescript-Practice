@@ -54,3 +54,38 @@ paintShape2({ shape });
 paintShape2({ shape, xPos: 100 });
 paintShape2({ shape, yPos: 100 });
 paintShape2({ shape, xPos: 100, yPos: 100 });
+
+// Properties can be marked readonly; this doesn't change runtime behavior, and internal contents can still be changed
+// but property itself can't be written to during type-checking
+interface Home {
+    readonly resident: { name: string; age: number };
+}
+function visitForBirthday(home: Home) {
+    // Can still update resident's properties
+    console.log(`Happy birthday ${home.resident.name}`);
+    home.resident.age++;
+}
+// function evict(home: Home) {
+//     // But can't write to the 'resident' property itself on a 'Home'
+//     home.resident = {
+
+//     }
+// }
+interface Person {
+    name: string;
+    age: number;
+}
+interface ReadonlyPerson {
+    readonly name: string;
+    readonly age: number;
+}
+let writablePerson: Person = {
+    name: "Person McPersonface",
+    age: 42,
+};
+// the following all works because TS doesn't factor in whether properties on two types are readonly when checking type compatibility
+let readonlyPerson: ReadonlyPerson = writablePerson;
+console.log(readonlyPerson.age);
+writablePerson.age++;
+console.log(readonlyPerson.age);
+// So main use of this is to signal intent during dev time rather than actually enforcing anything

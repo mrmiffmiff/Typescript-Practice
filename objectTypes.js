@@ -25,3 +25,18 @@ paintShape2({ shape });
 paintShape2({ shape, xPos: 100 });
 paintShape2({ shape, yPos: 100 });
 paintShape2({ shape, xPos: 100, yPos: 100 });
+function visitForBirthday(home) {
+    // Can still update resident's properties
+    console.log(`Happy birthday ${home.resident.name}`);
+    home.resident.age++;
+}
+let writablePerson = {
+    name: "Person McPersonface",
+    age: 42,
+};
+// the following all works because TS doesn't factor in whether properties on two types are readonly when checking type compatibility
+let readonlyPerson = writablePerson;
+console.log(readonlyPerson.age);
+writablePerson.age++;
+console.log(readonlyPerson.age);
+// So main use of this is to signal intent during dev time rather than actually enforcing anything
