@@ -89,3 +89,45 @@ console.log(readonlyPerson.age);
 writablePerson.age++;
 console.log(readonlyPerson.age);
 // So main use of this is to signal intent during dev time rather than actually enforcing anything
+
+// Can use index signatures when don't know the names of a type's properties but do know the shapes of the values
+interface StringArray {
+    [index: number]: string;
+}
+const myArray: StringArray = ["hello", "salud", "goodbye"];
+const secondItem = myArray[1];
+console.log(secondItem);
+// With numbers as the indexing value, need to be careful when combining with string, as it gets converted to a string, subset needed
+interface Animal {
+    name: string;
+}
+interface Dog extends Animal {
+    breed: string;
+}
+// interface NotOkay {
+//     [x: number]: Animal;
+//     [x: string]: Dog;
+// } can't work as animal is not a subset of dog
+interface ProbablyOkay {
+    [x: string]: Animal;
+    [x: number]: Dog;
+} // this works though
+// Dictionary patterns possible with stirng index signatures, but does enforce that properties match return type
+// String index declares that obj.property is also obj["property"]
+interface NumberDictionary {
+    [index: string]: number;
+    length: number; //ok
+    // name: string; doesn't work
+}
+// With union though
+interface NumberOrStringDictionary {
+    [index: string]: number | string;
+    length: number; //ok
+    name: string; //also ok
+}
+// Can make index signatures readonly to prevent assignment of course
+interface ReadOnlyStringArray {
+    readonly [index: number]: string;
+}
+let myArray2: ReadOnlyStringArray = ["hello", "salud", "goodbye"];
+// myArray2[2] = "welcome";

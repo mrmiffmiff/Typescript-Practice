@@ -39,4 +39,8 @@ let readonlyPerson = writablePerson;
 console.log(readonlyPerson.age);
 writablePerson.age++;
 console.log(readonlyPerson.age);
-// So main use of this is to signal intent during dev time rather than actually enforcing anything
+const myArray = ["hello", "salud", "goodbye"];
+const secondItem = myArray[1];
+console.log(secondItem);
+let myArray2 = ["hello", "salud", "goodbye"];
+// myArray2[2] = "welcome";
