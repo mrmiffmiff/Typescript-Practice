@@ -141,3 +141,29 @@ const d1 = makeDate(12345678);
 const d2 = makeDate(5, 5, 5);
 // const d3 = makeDate(1, 3); obviouly is not possible
 
+// 'this' will have its type inferred normally
+interface User {
+    id: number,
+    admin: boolean,
+    becomeAdmin?: () => void
+}
+const user: User = {
+    id: 123,
+    admin: false,
+    becomeAdmin: function () {
+        this.admin = true;
+    },
+};
+// Sometimes we need more control over what 'this' is; JS spec states you cannot have parameter called this
+// TS can thus use that syntax space to allow us to declare 'this'
+interface DB {
+    filterUsers(filter: (this: User) => boolean): User[];
+}
+// declare const getDB: () => DB;
+// const db = getDB();
+// const admins = db.filterUsers(function (this: User) {
+//     return this.admin;
+// });
+// This doesn't actually do anything rn so I'm commenting it out obviously
+// Common with callback-style APIs, where another object controls when function is called... must use function and not arrow functions
+// Arrow functions capture the global value of 'this'
