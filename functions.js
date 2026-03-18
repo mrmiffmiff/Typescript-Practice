@@ -98,3 +98,40 @@ function combine(arr1, arr2) {
 // However, if we give a type argument and specify a union, it'll work
 const arr = combine([1, 2, 3], ["hello"]);
 console.log(arr);
+function makeDate(mOrTimestamp, d, y) {
+    if (d !== undefined && y !== undefined) {
+        return new Date(y, mOrTimestamp, d);
+    }
+    else {
+        return new Date(mOrTimestamp);
+    }
+}
+const d1 = makeDate(12345678);
+const d2 = makeDate(5, 5, 5);
+const user = {
+    id: 123,
+    admin: false,
+    becomeAdmin: function () {
+        this.admin = true;
+    },
+};
+// declare const getDB: () => DB;
+// const db = getDB();
+// const admins = db.filterUsers(function (this: User) {
+//     return this.admin;
+// });
+// This doesn't actually do anything rn so I'm commenting it out obviously
+// Common with callback-style APIs, where another object controls when function is called... must use function and not arrow functions
+// Arrow functions capture the global value of 'this'
+// Rest parameters are always an array, must be at the end
+function multiply(n, ...m) {
+    return m.map((x) => n * x);
+}
+// 'a' gets value [10, 20, 30, 40];
+const a = multiply(10, 1, 2, 3, 4);
+console.log(a);
+// Can also provide a variable number of arguments from an iterable using spread syntax
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+arr1.push(...arr2);
+console.log(arr1);

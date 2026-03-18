@@ -167,3 +167,17 @@ interface DB {
 // This doesn't actually do anything rn so I'm commenting it out obviously
 // Common with callback-style APIs, where another object controls when function is called... must use function and not arrow functions
 // Arrow functions capture the global value of 'this'
+
+// Rest parameters are always an array, must be at the end
+function multiply(n: number, ...m: number[]) {
+    return m.map((x) => n * x);
+}
+// 'a' gets value [10, 20, 30, 40];
+const a = multiply(10, 1, 2, 3, 4);
+console.log(a);
+
+// Can also provide a variable number of arguments from an iterable using spread syntax
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+arr1.push(...arr2);
+console.log(arr1);
