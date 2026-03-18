@@ -181,3 +181,10 @@ const arr1 = [1, 2, 3];
 const arr2 = [4, 5, 6];
 arr1.push(...arr2);
 console.log(arr1);
+
+// Parameter destructuring still possible, convenient, and typeable
+type ABC = { a: number; b: number; c: number };
+function sum({ a, b, c }: ABC) {
+    console.log(a + b + c);
+}
+

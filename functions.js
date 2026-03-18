@@ -135,3 +135,6 @@ const arr1 = [1, 2, 3];
 const arr2 = [4, 5, 6];
 arr1.push(...arr2);
 console.log(arr1);
+function sum({ a, b, c }) {
+    console.log(a + b + c);
+}
