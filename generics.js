@@ -59,3 +59,48 @@ function getProperty(obj, key) {
 let x = { a: 1, b: 2, c: 3, d: 4 };
 getProperty(x, "a");
 // getProperty(x, "m"); not possible, as the key does not exist in the given object
+// To use class types in generics, must refer to them by their constructor functions
+function create(c) {
+    return new c();
+}
+// Can infer and constrain relationships between constructor function and the instance side of class types using prototype property
+class BeeKeeper {
+    constructor() {
+        this.hasMask = true;
+    }
+}
+class ZooKeeper {
+    constructor() {
+        this.nametag = "Mikle";
+    }
+}
+class Animal {
+    constructor() {
+        this.numLegs = 4;
+    }
+}
+class Bee extends Animal {
+    constructor() {
+        super(...arguments);
+        this.numLegs = 6;
+        this.keeper = new BeeKeeper();
+    }
+}
+class Lion extends Animal {
+    constructor() {
+        super(...arguments);
+        this.keeper = new ZooKeeper();
+    }
+}
+function createInstance(c) {
+    return new c();
+}
+console.log(createInstance(Lion).keeper.nametag);
+console.log(createInstance(Bee).keeper.hasMask);
+// Can declare defaults for type parameters, making specifying them optional. This helps avoid annoying overloads
+// declare function create<T extends HTMLElement = HTMLDivElement, U extends HTMLElement[] = T[]>(
+//     element?: T,
+//     children?: U
+// ): Container<T, U>;
+// const div = create(); <-- here div is of type Container<HTMLDivElement, HTMLDivElement[]>
+// const p = create(new HTMLParagraphElement()); <-- here p is of type Container<HTMLParagraphElement, HTMLParagraphElement[]>
