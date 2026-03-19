@@ -46,5 +46,16 @@ stringNumeric.add = function (x, y) {
     return x + y;
 };
 console.log(stringNumeric.add(stringNumeric.zeroValue, "test"));
-// Again, putting the type on the class itself helps make sure all members work with same type
-// This only works on instance side; static members cannot use the type parameter
+function loggingIdentity2(arg) {
+    console.log(arg.length); // No error here, because we know for sure we have a .length, but still otherwise generic
+    return arg;
+}
+// loggingIdentity2(3); not possible
+loggingIdentity2({ length: 10, value: 3 }); // that works fine
+// Can declare a type parameter constrained by another type parameter
+function getProperty(obj, key) {
+    return obj[key];
+}
+let x = { a: 1, b: 2, c: 3, d: 4 };
+getProperty(x, "a");
+// getProperty(x, "m"); not possible, as the key does not exist in the given object
