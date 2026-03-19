@@ -41,3 +41,24 @@ let myIdentity5: GenericIdentityFn2<number> = identity;
 console.log(myIdentity4<string>("test"));
 console.log(myIdentity5(3));
 // Knowing where to put the type parameter is helpful in describing in what way a type is generic or not
+
+// Can create generic classes
+class GenericNumber<NumType> {
+    zeroValue: NumType;
+    add: (x: NumType, y: NumType) => NumType;
+}
+let myGenericNumber = new GenericNumber<number>();
+myGenericNumber.zeroValue = 0;
+myGenericNumber.add = function (x, y) {
+    return x + y;
+};
+console.log(myGenericNumber.add(myGenericNumber.zeroValue, 23));
+// nothing restricts to number type actually
+let stringNumeric = new GenericNumber<string>();
+stringNumeric.zeroValue = "";
+stringNumeric.add = function (x, y) {
+    return x + y;
+};
+console.log(stringNumeric.add(stringNumeric.zeroValue, "test"));
+// Again, putting the type on the class itself helps make sure all members work with same type
+// This only works on instance side; static members cannot use the type parameter
