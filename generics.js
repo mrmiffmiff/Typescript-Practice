@@ -17,3 +17,16 @@ function loggingIdentity(arg) {
 }
 let output3 = loggingIdentity(["hello", "world", "goodbye"]);
 console.log(output3);
+// The type of generic functions is just like those of non-generic functions, type parameters listed first:
+let myIdentity1 = identity;
+// Can use different name for generic type parameter in the type; number of variables and usage thereof must line up
+let myIdentity2 = identity;
+// Can write the generic type as a call signature of an object literal type
+let myIdentity3 = identity; // this exact usage is excessive but it's for demonstration
+let myIdentity4 = identity;
+let myIdentity5 = identity;
+// This does become different as we have to specify the type on the usage of the interface which locks us in for that usage to that type
+// non-generic function signature that is part of a generic type
+console.log(myIdentity4("test"));
+console.log(myIdentity5(3));
+// Knowing where to put the type parameter is helpful in describing in what way a type is generic or not

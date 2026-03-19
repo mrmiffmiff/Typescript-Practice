@@ -18,3 +18,26 @@ function loggingIdentity<Type>(arg: Array<Type>): Array<Type> {
 }
 let output3 = loggingIdentity(["hello", "world", "goodbye"]);
 console.log(output3);
+
+// The type of generic functions is just like those of non-generic functions, type parameters listed first:
+let myIdentity1: <Type>(arg: Type) => Type = identity;
+// Can use different name for generic type parameter in the type; number of variables and usage thereof must line up
+let myIdentity2: <Input>(arg: Input) => Input = identity;
+// Can write the generic type as a call signature of an object literal type
+let myIdentity3: { <Type>(arg: Type): Type } = identity; // this exact usage is excessive but it's for demonstration
+// Can make a generic interface
+interface GenericIdentityFn1 {
+    <Type>(arg: Type): Type;
+}
+let myIdentity4: GenericIdentityFn1 = identity;
+// Can also move the generic parameter to the interface itself, allowing us to see what type(s) we're generic over
+// Makes the type parameter visible to other members of the interface
+interface GenericIdentityFn2<Type> {
+    (arg: Type): Type;
+}
+let myIdentity5: GenericIdentityFn2<number> = identity;
+// This does become different as we have to specify the type on the usage of the interface which locks us in for that usage to that type
+// non-generic function signature that is part of a generic type
+console.log(myIdentity4<string>("test"));
+console.log(myIdentity5(3));
+// Knowing where to put the type parameter is helpful in describing in what way a type is generic or not
