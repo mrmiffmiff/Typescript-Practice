@@ -68,4 +68,28 @@ function draw(circle) {
 }
 // okay
 draw({ color: "blue", radius: 42 });
-// staffer.name;
+let greetBox = { contents: "greetings" };
+// This helps avoid a lot of trouble, can use any type... can even avoid overloads
+function setContents(box, newContents) {
+    box.contents = newContents;
+}
+// The Array type is a generic type in itself, structured as interface Array<Type>
+// number[] is a shorthand for Array<number> etc.
+// Functions acting on either syntax can act on the other
+// Other JS data structures are generic too, like Map<K, V>, Set<T>, and Promise<T>
+// ReadonlyArray is a thing, describes arrays that shouldn't be changed
+// Mainly an intent tool
+// no constructor
+const roArray = ["red", "green", "blue"];
+// This describes arrays whose 0 index contains a string and whose 1 index contains a number
+function doTupleThing(pair) {
+    const a = pair[0];
+    console.log(a);
+    const b = pair[1];
+    console.log(b);
+    // const c = pair[2]; Will error past that number of indices on usage
+    // Can also destructure
+    const [c, d] = pair;
+    console.log(c, d);
+}
+doTupleThing(["hello", 42]);
