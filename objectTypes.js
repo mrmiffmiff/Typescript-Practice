@@ -43,4 +43,29 @@ const myArray = ["hello", "salud", "goodbye"];
 const secondItem = myArray[1];
 console.log(secondItem);
 let myArray2 = ["hello", "salud", "goodbye"];
-// myArray2[2] = "welcome";
+function createSquare(config) {
+    return {
+        color: config.color || "red",
+        area: config.width ? config.width * config.width : 20,
+    };
+}
+// let mySquare = createSquare({ colour: "red", width: 100 }); doesn't work as colour doesn't exist and color isn't filled
+// can get around some of this strictness in certain ways
+// Type assertion:
+let mySquare2 = createSquare({ width: 100, opacity: 0.5 });
+// string index signature, see above
+let mySquare3 = createSquare({ width: 100, opacity: 0.5 }); // with the index sig, as long as it doesn't match existing props, type doesn't matter
+// Assign to another variable
+let squareOptions = { colour: "red", width: 100 };
+let mySquare = createSquare(squareOptions); // if the index sig wasn't there and the passed in object had nothing in common with the interface, this would break
+const cc = {
+    color: "red",
+    radius: 42,
+};
+function draw(circle) {
+    console.log(`Color was ${circle.color}`);
+    console.log(`Radius was ${circle.radius}`);
+}
+// okay
+draw({ color: "blue", radius: 42 });
+// staffer.name;

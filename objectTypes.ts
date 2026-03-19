@@ -131,3 +131,81 @@ interface ReadOnlyStringArray {
 }
 let myArray2: ReadOnlyStringArray = ["hello", "salud", "goodbye"];
 // myArray2[2] = "welcome";
+
+// Object literals undergo excess property checking when assigning to typed variables or passing as arguments
+interface SquareConfig {
+    color?: string;
+    width?: number;
+    [propName: string]: unknown;
+}
+function createSquare(config: SquareConfig): { color: string; area: number } {
+    return {
+        color: config.color || "red",
+        area: config.width ? config.width * config.width : 20,
+    };
+}
+// let mySquare = createSquare({ colour: "red", width: 100 }); doesn't work as colour doesn't exist and color isn't filled
+// can get around some of this strictness in certain ways
+// Type assertion:
+let mySquare2 = createSquare({ width: 100, opacity: 0.5 } as SquareConfig);
+// string index signature, see above
+let mySquare3 = createSquare({ width: 100, opacity: 0.5 }); // with the index sig, as long as it doesn't match existing props, type doesn't matter
+// Assign to another variable
+let squareOptions = { colour: "red", width: 100 };
+let mySquare = createSquare(squareOptions); // if the index sig wasn't there and the passed in object had nothing in common with the interface, this would break
+// This should be saved for more complex structures rather than simple stuff like this
+
+// Quite common to need to have more specific versions of types
+interface BasicAddress {
+    name?: string;
+    street: string;
+    city: string;
+    country: string;
+    postalCode: string;
+}
+// Rather than defining the more specific version with all the same properties plus more, can just extend
+interface AddressWithUnit extends BasicAddress {
+    unit: string;
+}
+// An interface can extend from multiple types
+interface Colorful {
+    color: string;
+}
+interface Circle2 {
+    radius: number;
+}
+interface ColorfulCircle extends Colorful, Circle2 { }
+const cc: ColorfulCircle = {
+    color: "red",
+    radius: 42,
+};
+
+// Can also combine, make Intersection Types, with &
+type ColorfulCircle2 = Colorful & Circle2;
+function draw(circle: Colorful & Circle2) {
+    console.log(`Color was ${circle.color}`);
+    console.log(`Radius was ${circle.radius}`);
+}
+// okay
+draw({ color: "blue", radius: 42 });
+// oops
+// draw({ color: "red", raidus: 42 });
+
+// There are differences between these, subtly, mainly in conflict handling
+// Interfaces try to merge compatible properties or error otherwise...
+// interface NotWorkingPerson {
+//     name: string;
+// }
+// interface NotWorkingPerson {
+//     name: number; we don't allow this
+// }
+// Intersections will compile such cases but give us a never type
+interface Person1 {
+    name: string;
+}
+interface Person2 {
+    name: number;
+}
+type Staff = Person1 & Person2;
+declare const staffer: Staff;
+// staffer.name;
