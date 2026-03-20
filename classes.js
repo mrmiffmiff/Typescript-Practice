@@ -1,7 +1,11 @@
 // TS has full support for classes
 class Point {
+    x;
+    y;
+    z = 0; // initializer, bypasses strictPropertyInitalization error
+    kind; // ! signals will definitely initialize but outside constructor
+    otherKind; // can only be set in the constructor
     constructor(x, y, otherKind) {
-        this.z = 0; // initializer, bypasses strictPropertyInitalization error
         this.x = x;
         this.y = y;
         this.otherKind = otherKind;
@@ -32,3 +36,35 @@ p.scale(3);
 console.log(p.distance);
 p.distance = 20;
 console.log(p.x, p.y, p.distance);
+// Can use implements to check that a class satisfies a particular interface
+class Sonar {
+    ping() {
+        console.log("ping!");
+    }
+}
+// errors if not
+// class Ball implements Pingable {
+//     pong() {
+//         console.log("pong!");
+//     }
+// }
+// Can of course implement multiple interfaces on one class
+// Does not actually change the type of the class or its methods or anything like that, just about treatment
+// Can have subclasses as always with extends
+class Animal {
+    move() {
+        console.log("Moving along!");
+    }
+}
+class Dog extends Animal {
+    woof(times) {
+        for (let i = 0; i < times; i++) {
+            console.log("woof!");
+        }
+    }
+}
+const d = new Dog();
+d.move();
+d.woof(3);
+// can of course still override methods and use super. syntax to access base
+// TS does enforce that a derived class is always a subtype of its base class
