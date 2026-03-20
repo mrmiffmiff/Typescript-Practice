@@ -107,3 +107,60 @@ class Box {
 const b = new Box("hello");
 // can use generic constraints and defaults the same as interfaces
 // static members can never refer to Type parameters
+// this handling has some options, think about Arrow functions and this parameters, tradeoffs
+// also there's a special type called this that refers dynamically to the type of the current class
+class OtherBox {
+    contents = "";
+    set(value) {
+        this.contents = value;
+        return this;
+    }
+}
+class ClearableBox extends OtherBox {
+    clear() {
+        this.contents = "";
+    }
+}
+const cb = new ClearableBox();
+const cbs = cb.set("hello");
+// Can also use this in type annotations, different from writing the actual class, as might be relevant with derived classes
+// Can use this is Type in return position for methods in classes and interfaces.
+// Mix with type narrowing and the type of the target object will narrow to the specified Type
+class FileSystemObject {
+    path;
+    networked;
+    isFile() {
+        return this instanceof FileRep;
+    }
+    isDirectory() {
+        return this instanceof this.isDirectory;
+    }
+    isNetworked() {
+        return this.networked;
+    }
+    constructor(path, networked) {
+        this.path = path;
+        this.networked = networked;
+    }
+}
+class FileRep extends FileSystemObject {
+    content;
+    constructor(path, content) {
+        super(path, false);
+        this.content = content;
+    }
+}
+class Directory extends FileSystemObject {
+    children = [];
+}
+const fso = new FileRep("foo/bar.txt", "foo");
+if (fso.isFile()) {
+    fso.content;
+}
+else if (fso.isDirectory()) {
+    fso.children;
+}
+else if (fso.isNetworked()) {
+    fso.host;
+}
+// common use-case: allow lazy validation of a particular field

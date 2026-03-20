@@ -120,3 +120,57 @@ class Box<Type> {
 const b = new Box("hello");
 // can use generic constraints and defaults the same as interfaces
 // static members can never refer to Type parameters
+
+// this handling has some options, think about Arrow functions and this parameters, tradeoffs
+// also there's a special type called this that refers dynamically to the type of the current class
+
+class OtherBox {
+    contents: string = "";
+    set(value: string) {
+        this.contents = value;
+        return this;
+    }
+}
+class ClearableBox extends OtherBox {
+    clear() {
+        this.contents = "";
+    }
+}
+const cb = new ClearableBox();
+const cbs = cb.set("hello");
+// Can also use this in type annotations, different from writing the actual class, as might be relevant with derived classes
+// Can use this is Type in return position for methods in classes and interfaces.
+// Mix with type narrowing and the type of the target object will narrow to the specified Type
+class FileSystemObject {
+    isFile(): this is FileRep {
+        return this instanceof FileRep;
+    }
+    isDirectory(): this is Directory {
+        return this instanceof this.isDirectory;
+    }
+    isNetworked(): this is Networked & this {
+        return this.networked;
+    }
+    constructor(public path: string, private networked: boolean) { }
+}
+class FileRep extends FileSystemObject {
+    constructor(path: string, public content: string) {
+        super(path, false);
+    }
+}
+class Directory extends FileSystemObject {
+    children: FileSystemObject[] = [];
+}
+interface Networked {
+    host: string;
+}
+const fso: FileSystemObject = new FileRep("foo/bar.txt", "foo");
+if (fso.isFile()) {
+    fso.content;
+} else if (fso.isDirectory()) {
+    fso.children;
+} else if (fso.isNetworked()) {
+    fso.host;
+}
+// common use-case: allow lazy validation of a particular field
+
