@@ -164,3 +164,18 @@ else if (fso.isNetworked()) {
     fso.host;
 }
 // common use-case: allow lazy validation of a particular field
+// special syntax to turn constructor parameters into class properties with the same name and value
+// must prefix with visibility or readonly
+class Params {
+    x;
+    y;
+    z;
+    constructor(x, y, z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    } // don't actually need body
+}
+const p_a = new Params(1, 2, 3);
+console.log(p_a.x);
+// console.log(p_a.z); private, can't be done
