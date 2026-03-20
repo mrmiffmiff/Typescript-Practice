@@ -96,3 +96,14 @@ class Foo {
         catch { }
     }
 }
+// Classes can be generic
+class Box {
+    contents;
+    constructor(value) {
+        this.contents = value;
+    }
+}
+// when instantiated with new, type parameters are inferred just like in a function call
+const b = new Box("hello");
+// can use generic constraints and defaults the same as interfaces
+// static members can never refer to Type parameters
